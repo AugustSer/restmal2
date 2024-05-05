@@ -1,0 +1,5 @@
+[{"model": "computerclub.user", "pk": 1, "fields":
+      {"name": "СерёжкаПипл", "visitor": "No"}},
+  {"model": "computerclub.order", "pk": 1, "fields":
+      {"user": 2, "status": "Open"}}
+]
