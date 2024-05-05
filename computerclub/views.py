@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView, ListView
 from rest_framework.viewsets import ModelViewSet
-from .models import Director, Administrator, User, Order
+from .models import Director, Administrator, User_test, Order
 from .serializers import DirectorSerializer, AdministratorSerializer, UserSerializer, OrderSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -20,7 +20,7 @@ class AdministratorViewSet(ModelViewSet):
 
 
 class UserViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User_test.objects.all()
     serializer_class = UserSerializer
     http_method_names = ('get', 'post', 'put', 'delete')
 

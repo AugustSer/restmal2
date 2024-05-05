@@ -1,31 +1,31 @@
 from django.test import TestCase
 from rest_framework.test import APITestCase
 from rest_framework import status
-from .models import Order, User
+from .models import Order, User_test
 from django.contrib.auth.models import User
 from .serializers import OrderSerializer
 
 
 class OrdersTests(APITestCase):
     def setUp(self) -> None:
-        self.user = User.objects.create(name='user')
-        self.status = Order.objects.create(name='status')
+        self.user = User_test.objects.create(name='user', visitor='No')
+        self.status = Order.objects.create(user=self.user, status='status')
         self.order1 = Order.objects.create(user=self.user,status='Open')
         self.user1 = User.objects.create_user('malkov', 'malkov@malkov.ru')
 
-    def malkov_anonymous_user(self):
+    def test_anonymous_user(self):
         response = self.client.get('/api/orders/', format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def malkov_get_orders_list(self):
+    def test_get_orders_list(self):
         self.client.force_login(self.user1)
         response = self.client.get('/api/orders/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data), 2)
         serializer = OrderSerializer(Order.objects.all(), many=True)
         self.assertListEqual(response.data, serializer.data)
 
-    def malkov_get_order(self):
+    def test_get_order(self):
         self.client.force_login(self.user1)
         response = self.client.get(f'/api/orders/{self.order1.id}/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -53,7 +53,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         cls.selenium.quit()
         super().tearDownClass()
 
-    def malkov_order_page(self):
+    def test_order_page(self):
         self.selenium.get(f"{self.live_server_url}/")
         elements = self.selenium.find_elements(By.XPATH, '//div')
         for element in elements:

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Director, Administrator, User, Order
+from .models import Director, Administrator, User_test, Order
 
 
 class DirectorSerializer(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class AdministratorSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = User_test
         fields = ('id', 'name', 'visitor')
 
 

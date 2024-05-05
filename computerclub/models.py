@@ -23,7 +23,7 @@ class Administrator(models.Model):
         return self.name
 
 
-class User(models.Model):
+class User_test(models.Model):
     name = models.CharField(max_length=100, verbose_name='Никнейм')
     visitor = models.CharField(max_length=20,verbose_name='Частый гость',choices=(('Yes', 'Да'),('No', 'Нет')))
 
@@ -33,7 +33,7 @@ class User(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, verbose_name='Имя клиента', on_delete=models.CASCADE)
+    user = models.ForeignKey(User_test, verbose_name='Имя клиента', on_delete=models.CASCADE)
     status = models.CharField(verbose_name='Статус заказа',max_length=50,choices=(('Open', 'Открыт'),('Close', 'Закрыт')))
 
 
